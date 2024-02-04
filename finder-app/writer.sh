@@ -8,7 +8,9 @@ fi
 writefile=$1
 writestr=$2
 
-touch $writefile && echo $writestr > $writefile
+dirpath=`dirname $1`
+
+mkdir -p $dirpath && touch $writefile && echo $writestr > $writefile
 
 if [ $? -ne 0 ]; then
     echo "Error: file $writefile could not be created"
