@@ -1,7 +1,7 @@
 #!/usr/bin/bash
 
 if [ $# -lt 2 ]; then
-    echo "Usage: ./finder filesdir searchstr"
+    echo "Usage: ./finder.sh filesdir searchstr"
     exit 1
 fi
 

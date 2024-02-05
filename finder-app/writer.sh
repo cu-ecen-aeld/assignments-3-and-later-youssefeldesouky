@@ -1,7 +1,7 @@
 #!/usr/bin/bash
 
 if [ $# -lt 2 ]; then
-    echo "Usage: ./finder filesdir searchstr"
+    echo "Usage: ./writer.sh writefile writestr"
     exit 1
 fi
 
