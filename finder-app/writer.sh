@@ -1,4 +1,4 @@
-#!/usr/bin/bash
+#!/usr/bin/sh
 
 if [ $# -lt 2 ]; then
     echo "Usage: ./writer.sh writefile writestr"

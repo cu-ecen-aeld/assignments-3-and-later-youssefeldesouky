@@ -1,4 +1,4 @@
-#!/usr/bin/bash
+#!/bin/sh
 
 if [ $# -lt 2 ]; then
     echo "Usage: ./finder.sh filesdir searchstr"
