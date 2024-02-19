@@ -7,6 +7,7 @@ CFLAGS=-Wall -Werror -g
 
 all: $(OBJS)
 	$(CC) $^ -o $(BIN) $(CFLAGS)
+	$(RM) *.o
 
 %.o: %.c
 	$(CC) $< -c $(CFLAGS)

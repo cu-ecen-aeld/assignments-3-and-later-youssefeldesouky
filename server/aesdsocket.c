@@ -15,7 +15,7 @@
 #include <stdbool.h>
 
 #define LOG_PATH "/var/tmp/aesdsocketdata"
-#define BUF_SIZE 30000
+#define BUF_SIZE 1024
 
 int sockfd = 0, clientfd = 0;
 int tmpfd = 0;
@@ -67,6 +67,8 @@ int main(int argc, char **argv){
         fprintf(stderr, "Error: socket: %s\n", strerror(errno));
         goto FRE;
     }
+
+    setsockopt(sockfd, SOL_SOCKET, SO_REUSEADDR, &(int){1}, sizeof(int));
 
     retval = bind(sockfd, res->ai_addr, res->ai_addrlen);
     if(retval == -1){
@@ -151,10 +153,14 @@ int main(int argc, char **argv){
         }
 
         while((bytes = recv(clientfd, buf, BUF_SIZE, 0)) > 0){
-            bytes = write(tmpfd, buf, bytes);
-            bytes = sendfile(clientfd, tmpfd, &(off_t){0}, lseek(tmpfd, 0, SEEK_CUR) + 1);
+            write(tmpfd, buf, bytes);
+            if(buf[bytes - 1] == '\n'){
+                break;
+            }
+            
         }
-
+        sendfile(clientfd, tmpfd, &(off_t){0}, lseek(tmpfd, 0, SEEK_END));
+        close(clientfd);
         syslog(LOG_INFO, "Closed connection from %s", ip_addr);
         close(tmpfd);
     }
